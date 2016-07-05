@@ -1,0 +1,76 @@
+<section class="jumbotron radius">
+	<h1 class="text--center">
+		{{ ::vm.viewTitle }}
+	</h1>
+
+	<p class="alert alert-danger" data-ng-show="vm.errorMessage">
+		{{ vm.errorMessage }}
+	</p>
+
+	<p class="alert alert-success" data-ng-show="vm.successMessage">
+		{{ vm.successMessage }}
+	</p>
+
+	<input class="form-control" type="search"
+		placeholder="What do you search?"
+		data-ng-model-options="{ updatedOn: 'default blur', debounce:{ default: 250, blur: 0 }}"
+		data-ng-model="searchCriteria">
+
+	<table class="table" data-ng-show="vm.contacts.length">
+		<thead>
+			<tr>
+				<th colspan="2" class="text--center">
+					<a href="" data-ng-click="vm.orderBy('name')">
+						Name
+					</a>
+				</th>
+
+				<th>
+					Phone
+				</th>
+
+				<th>
+					<a href="" data-ng-click="vm.orderBy('operator.name')">
+						Operator
+					</a>
+				</th>
+
+				<th>
+					<a href="" data-ng-click="vm.orderBy('birthDate')">
+						Birth date
+					</a>
+				</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr data-ng-repeat="contact in vm.contacts | filter:searchCriteria | orderBy:vm.orderCriteria:vm.orderDirection track by contact.id"
+				data-ng-class="{ 'text--bold bg--green': contact.selected }">
+				<td>
+					<input type="checkbox"
+						data-ng-model="contact.selected">
+				</td>
+				<td>
+					<a href="#/contact/{{ ::contact.id }}">
+						{{ ::contact.name | truncate:15 }}
+					</a>
+				</td>
+				<td>{{ ::contact.phone }}</td>
+				<td>{{ ::contact.operator.name }}</td>
+				<td>{{ ::contact.birthDate | date:'MM/dd/yyyy HH:mm' }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h3 class="text--center" data-ng-hide="vm.contacts.length">
+		There is no data
+	</h3>
+
+	<a class="btn btn-primary btn-block" href="#/contact">New contact</a>
+
+	<button type="button" class="btn btn-danger btn-block"
+		data-ng-disabled="!vm.hasContactSelected(vm.contacts)"
+		data-ng-click="vm.deleteContact(vm.contacts)">
+		Delete Contact
+	</button>
+</section>

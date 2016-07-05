@@ -1,0 +1,63 @@
+<section class="jumbotron">
+	<form name="vm.contactForm">
+
+		<label for="name">* Name</label>
+		<input id="name" class="form-control" type="text" name="name"
+			required minlength="3"
+			data-ng-model="vm.contact.name">
+
+		<ng-messages class="alert alert-danger" for="vm.contactForm.name.$error"
+			data-ng-show="vm.contactForm.name.$invalid && vm.contactForm.name.$touched">
+			<ng-message when="required">
+				Name is required
+			</ng-message>
+
+			<ng-message when="minlength">
+				Name minimum size is 3
+			</ng-message>
+		</ng-messages>
+
+		<label for="phone">* Phone</label>
+		<input id="phone" class="form-control" type="tel" name="phone"
+			placeholder="e.g. 99999-8888"
+			required maxlength="10" data-ng-pattern="/^\d{4,5}-\d{4}$/"
+			data-ng-model="vm.contact.phone">
+
+		<ng-messages class="alert alert-danger" for="vm.contactForm.phone.$error"
+			data-ng-show="vm.contactForm.phone.$invalid && vm.contactForm.phone.$touched">
+			<ng-message when="required">
+				Phone is required
+			</ng-message>
+
+			<ng-message when="pattern">
+				Invalid number format
+			</ng-message>
+		</ng-messages>
+
+		<label for="operator">Operator</label>
+		<select id="operator" class="form-control"
+			data-ng-model="vm.contact.operator"
+			data-ng-options="operator.name + ' (' + (operator.price | currency) + ' per minute)' group by operator.category for operator in vm.operators | orderBy:'name' track by operator.id">
+
+			<option value="">Select one</option>
+		</select>
+
+		<label for="birthDate">Birth date</label>
+		<input id="birthDate" class="form-control" type="text" name="birthDate"
+			ui-date-mask
+			data-ng-model="vm.contact.birthDate">
+
+		<button class="btn btn-primary btn-block"
+			data-ng-disabled="vm.contactForm.$invalid"
+			data-ng-click="vm.saveContact(vm.contact)">
+			Add Contact
+		</button>
+
+		<button type="button" class="btn btn-danger btn-block"
+			data-ng-disabled="!vm.hasContactSelected(vm.contacts)"
+			data-ng-click="vm.deleteContact(vm.contacts)">
+			Delete Contact
+		</button>
+
+	</form>
+</section>
