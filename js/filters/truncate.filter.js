@@ -1,10 +1,21 @@
-angular.module('utils.filters', []);
+(function() {
 
-angular.module('utils.filters').filter('truncate', function() {
-	return function(input, size) {
-		if (input.length <= size)
-			return input;
-		else
-			return input.substring(0, (size || 5)) + '...';
-	};
-});
+	'use strict';
+
+	angular
+	  .module('filter.truncate', [])
+	  .filter('truncate', truncate);
+
+	truncate.$inject = [];
+
+	function truncate() {
+
+		return function(input, size) {
+			if (input.length <= size)
+				return input;
+			else
+				return input.substring(0, (size || 5)) + '...';
+		};
+
+	}
+})();

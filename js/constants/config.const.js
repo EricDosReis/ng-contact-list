@@ -1,6 +1,8 @@
-angular.module('ContactList')
-	.constant('config', {
+(function() {
+	'use strict';
 
-		BASEURL: 'http://localhost:3412'
+	angular
+	  .module('ContactList')
+	  .constant('config', { BASEURL: 'http://localhost:3412' });
 
-	});
+})();

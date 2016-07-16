@@ -1,5 +1,13 @@
-angular.module('ContactList')
-	.factory('loadingInterceptor', function ($q, $rootScope, $timeout) {
+(function() {
+	'use strict';
+
+	angular
+	  .module('ContactList')
+	  .factory('loadingInterceptor', loadingInterceptor);
+
+	loadingInterceptor.$inject = ['$q', '$rootScope', '$timeout'];
+
+	function loadingInterceptor($q, $rootScope, $timeout) {
 
 		return {
 			request: function (config) {
@@ -33,4 +41,5 @@ angular.module('ContactList')
 			}
 		};
 
-	});
+	}
+})();

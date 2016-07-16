@@ -1,23 +1,19 @@
-angular.module('ContactList')
-	.controller('ContactsCtrl', function (ContactAPI) {
+(function() {
+	'use strict';
+
+	angular
+	  .module('ContactList')
+	  .controller('ContactsCtrl', ContactsCtrl);
+
+	ContactsCtrl.$inject = ['ContactAPI'];
+
+	function ContactsCtrl(ContactAPI) {
 
 		var vm       = this;
 		vm.contacts  = [];
 		vm.viewTitle = 'Contact List';
 
 		getContacts();
-
-		function getContacts() {
-			ContactAPI.getAll().success(data => {
-				vm.contacts = data;
-			}).error(data => {
-				errorMessage(data);
-			});
-		}
-
-		function errorMessage(message) {
-			vm.errorMessage = 'Something is wrong: ' + message;
-		}
 
 		vm.deleteContact = function(contacts) {
 			vm.contacts = contacts.filter(contact => {
@@ -36,4 +32,17 @@ angular.module('ContactList')
 			vm.orderDirection = !vm.orderDirection;
 		};
 
-	});
+		function getContacts() {
+			ContactAPI.getAll().success(data => {
+				vm.contacts = data;
+			}).error(data => {
+				errorMessage(data);
+			});
+		}
+
+		function errorMessage(message) {
+			vm.errorMessage = 'Something is wrong: ' + message;
+		}
+
+	}
+})();

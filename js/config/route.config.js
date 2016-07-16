@@ -1,5 +1,13 @@
-angular.module('ContactList')
-	.config(function ($routeProvider) {
+(function() {
+	'use strict';
+
+	angular
+	  .module('ContactList')
+	  .config(routeConfig);
+
+	routeConfig.$inject = ['$routeProvider'];
+
+	function routeConfig($routeProvider) {
 
 		$routeProvider.when('/contacts', {
 			templateUrl: 'views/contacts.html',
@@ -21,4 +29,5 @@ angular.module('ContactList')
 
 		$routeProvider.otherwise({ redirectTo: '/contacts' });
 
-	});
+	}
+})();

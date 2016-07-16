@@ -1,37 +1,45 @@
-angular.module('ui.dateMask', []);
+(function() {
+	'use strict';
 
-angular.module('ui.dateMask').directive('uiDateMask', function($filter) {
-	return {
-		require: 'ngModel',
-		link: function(scope, element, attrs, ctrl) {
-			var dateFormat = function(date) {
-				date = date.replace(/[^0-9]+/g, '');
+	angular
+	  .module('ui.dateMask', [])
+	  .directive('uiDateMask', uiDateMask);
 
-				if (date.length > 2)
-					date = date.substring(0, 2) + '/' + date.substring(2);
+	function uiDateMask($filter) {
 
-				if (date.length > 5)
-					date = date.substring(0, 5) + '/' + date.substring(5, 9);
+		return {
+			require: 'ngModel',
+			link: function(scope, element, attrs, ctrl) {
+				var dateFormat = function(date) {
+					date = date.replace(/[^0-9]+/g, '');
 
-				return date;
-			};
+					if (date.length > 2)
+						date = date.substring(0, 2) + '/' + date.substring(2);
 
-			element.bind('keyup', () => {
-				ctrl.$setViewValue(dateFormat(ctrl.$viewValue));
-				ctrl.$render();
-			});
+					if (date.length > 5)
+						date = date.substring(0, 5) + '/' + date.substring(5, 9);
 
-			ctrl.$parsers.push(value => {
-				if (value.length === 10) {
-					var dateArray = value.split('/');
+					return date;
+				};
 
-					return new Date(dateArray[2], dateArray[1] - 1, dateArray[0]).getTime();
-				}
-			});
+				element.bind('keyup', () => {
+					ctrl.$setViewValue(dateFormat(ctrl.$viewValue));
+					ctrl.$render();
+				});
 
-			ctrl.$formatters.push(value => {
-				return $filter('date')(value, 'dd/MM/yyyy');
-			});
-		}
-	};
-});
+				ctrl.$parsers.push(value => {
+					if (value.length === 10) {
+						var dateArray = value.split('/');
+
+						return new Date(dateArray[2], dateArray[1] - 1, dateArray[0]).getTime();
+					}
+				});
+
+				ctrl.$formatters.push(value => {
+					return $filter('date')(value, 'dd/MM/yyyy');
+				});
+			}
+		};
+
+	}
+})();

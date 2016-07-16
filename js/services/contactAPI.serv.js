@@ -1,5 +1,13 @@
-angular.module('ContactList')
-	.factory('ContactAPI', function($http, config) {
+(function() {
+	'use strict';
+
+	angular
+	  .module('ContactList')
+	  .factory('ContactAPI', ContactAPI);
+
+	ContactAPI.$inject = ['$http', 'config'];
+
+	function ContactAPI($http, config) {
 
 		var _getAll = function() {
 			return $http.get(config.BASEURL + '/contact');
@@ -19,4 +27,5 @@ angular.module('ContactList')
 			save:   _save
 		};
 
-	});
+	}
+})();

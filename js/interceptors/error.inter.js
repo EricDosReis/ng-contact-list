@@ -1,5 +1,13 @@
-angular.module('ContactList')
-	.factory('errorInterceptor', function ($q, $location) {
+(function() {
+	'use strict';
+
+	angular
+	  .module('ContactList')
+	  .factory('errorInterceptor', errorInterceptor);
+
+	errorInterceptor.$inject = ['$q', '$location'];
+
+	function errorInterceptor($q, $location) {
 
 		return {
 			responseError: function(rejection) {
@@ -16,4 +24,5 @@ angular.module('ContactList')
 			}
 		};
 
-	});
+	}
+})();
